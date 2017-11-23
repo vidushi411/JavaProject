@@ -1,0 +1,373 @@
+import java.awt.*;
+import javax.swing.*;
+import java.io.*;
+import java.awt.event.*;
+class myframe
+{
+	JFrame f;
+	JLabel label1,label2,label3,label4;
+	JTextField text1,text2,text3,text4;
+	JButton button1,button2,button3,button4,button5,button6,button7;
+	myframe()
+	{
+		f=new JFrame("LIBRARY Management System");
+		f.getContentPane().setLayout(null);
+		label1=new JLabel("BOOK ID");
+		text1=new JTextField(15);
+		label2=new JLabel("BOOK NAME");
+		text2=new JTextField(15);
+		label3=new JLabel("BOOK Validity");
+		text3=new JTextField(25);
+		label4=new JLabel("ISSUE DATE");
+		text4=new JTextField(15);
+		button1=new JButton("|<");
+		button2=new JButton("<");
+		button3=new JButton(">");
+		button4=new JButton(">|");
+		button5=new JButton("Add");
+		button6=new JButton("Clear");
+		button7=new JButton("Search");
+		button6.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent ae)
+			{
+
+				text1.setText("");
+				text2.setText("");
+				text3.setText("");
+				text4.setText("");
+			}
+
+		});
+
+		button4.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent ae)
+			{
+				fileread a=new fileread();
+				try
+				{
+					a.read();
+				}
+				catch(Exception e){}
+				text1.setText(a.id.substring(0,8));
+				text2.setText(a.name.substring(0,12));
+				text3.setText(a.validity.substring(0,12));
+				text4.setText(a.dob.substring(0,13));
+			}
+
+		});
+		button2.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent ae)
+			{
+				rownum a3=new rownum();
+				try
+				{
+					a3.read(text1.getText());
+				}
+				catch(Exception e){}
+			}
+
+		});
+		button7.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent ae)
+			{
+				search a=new search();
+				try
+				{
+					a.read(text1.getText(),text2.getText(),text3.getText(),text4.getText());
+				}
+				catch(Exception e){}
+				String text11=text1.getText();
+				String text22=text2.getText();
+				String text33=text3.getText();
+				String text44=text4.getText();
+				String p=" ";
+				for(int i=text11.length();i<8;i++)
+				{
+					text11=text11+p;
+				}
+				for(int j=text22.length();j<12;j++)
+				{
+					text22=text22+p;
+				}
+				for(int k=text33.length();k<12;k++)
+				{
+					text33=text33+p;
+				}
+				for(int l=text44.length();l<13;l++)
+				{
+					text44=text44+p;
+				}
+				if(text11.equals(a.id)||text22.equals(a.name)||text33.equals(a.validity)||text44.equals(a.dob))
+				{
+					text1.setText(a.id.substring(0,7));
+					text2.setText(a.name.substring(0,11));
+					text3.setText(a.validity.substring(0,11));
+					text4.setText(a.dob.substring(0,12));
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(f, "No Match Found");
+				}
+			}
+
+		});
+
+		button5.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent ae)
+			{
+				String id,name,validity,dob;
+				String id1=" ";
+				String name1=" ";
+				String validity1=" ";
+				String dobutton1=" ";
+				id=text1.getText().toString();
+				for(int i=id.length();i<7;i++)
+				{
+					id1=id1+" ";
+				}
+				name=text2.getText().toString();
+				for(int j=name.length();j<11;j++)
+				{
+					name1=name1+" ";
+				}
+				validity=text3.getText().toString();
+				for(int k=validity.length();k<11;k++)
+				{
+					validity1=validity1+" ";
+				}
+				dob=text4.getText().toString();
+				for(int l=dob.length();l<12;l++)
+				{
+					dobutton1=dobutton1+" ";
+				}
+				try
+				{
+					FileWriter w1=new FileWriter("project.txt",true);
+					w1.write(System.getProperty("line.separator"));
+					w1.write(id+id1+"| ");
+					w1.write(name+name1+"| ");
+					w1.write(validity+validity1+"| ");
+					w1.write(dob+dobutton1+"| ");
+					JOptionPane.showMessageDialog(f, "Data Added");
+					w1.close();
+				}
+				catch(Exception e){
+					JOptionPane.showMessageDialog(f, "Error");
+				}
+			}
+		});
+		button1.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent ae)
+			{
+				data d=new data();
+				try
+				{
+					d.read(4);
+				}
+				catch(Exception e){}
+				text1.setText(d.id);
+				text2.setText(d.name);
+				text3.setText(d.validity);
+				text4.setText(d.dob);
+
+			}
+
+		});
+		button2.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent ae)
+			{
+				rownum r=new rownum();
+				data d=new data();
+				try
+				{
+					int i=r.read(text1.getText());
+					d.read(i-1);
+				}
+				catch(Exception e){}
+				text1.setText(d.id);
+				text2.setText(d.name);
+				text3.setText(d.validity);
+				text4.setText(d.dob);
+
+			}
+
+		});
+		button3.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent ae)
+			{
+				rownum r=new rownum();
+				data d=new data();
+				try
+				{
+					int i=r.read(text1.getText());
+					d.read(i+1);
+				}
+				catch(Exception e){}
+				text1.setText(d.id);
+				text2.setText(d.name);
+				text3.setText(d.validity);
+				text4.setText(d.dob);
+
+			}
+
+		});
+		label1.setBounds(50,20,120,27);
+		label2.setBounds(50,90,120,27);
+		label3.setBounds(50,160,120,27);
+		label4.setBounds(50,230,120,27);
+		text1.setBounds(220,20,180,27);
+		text2.setBounds(220,90,180,27);
+		text3.setBounds(220,160,180,27);
+		text4.setBounds(220,230,180,27);
+		button1.setBounds(50,300,80,27);
+		button2.setBounds(140,300,80,27);
+		button3.setBounds(230,300,80,27);
+		button4.setBounds(320,300,80,27);
+		button5.setBounds(50,370,80,27);
+		button6.setBounds(185,370,80,27);
+		button7.setBounds(320,370,80,27);
+		label1.setForeground(Color.blue);
+		label2.setForeground(Color.blue);
+		label3.setForeground(Color.blue);
+		label4.setForeground(Color.blue);
+		f.getContentPane().add(label1);
+		f.getContentPane().add(label2);
+		f.getContentPane().add(label3);
+		f.getContentPane().add(label4);
+		f.getContentPane().add(text1);
+		f.getContentPane().add(text2);
+		f.getContentPane().add(text3);
+		f.getContentPane().add(text4);
+		f.getContentPane().add(button1);
+		f.getContentPane().add(button2);
+		f.getContentPane().add(button3);
+		f.getContentPane().add(button4);
+		f.getContentPane().add(button5);
+		f.getContentPane().add(button6);
+		f.getContentPane().add(button7);
+		f.setSize(500,500);
+
+		f.setVisible(true);
+	}
+}
+class rownum{
+	String line,id,name,validity,dob;
+	int i=0;
+	int read(String text1)throws IOException{
+		FileReader fr=new FileReader("project.txt");
+		BufferedReader br=new BufferedReader(fr);
+		while((line=br.readLine())!=null)
+		{
+			i++;
+			id=line.substring(0,8);
+			name=line.substring(10,22);
+			validity=line.substring(24,36);
+			dob=line.substring(38,line.length()-2);
+			if(text1.equals(id))
+			{
+				break;
+			}
+		}
+		br.close();
+		return i;
+	}
+}
+class data
+{
+	String line,id,name,validity,dob;
+	void read(int n)throws IOException{
+
+		FileReader fr=new FileReader("project.txt");
+		BufferedReader br=new BufferedReader(fr);
+		while(((line=br.readLine())!=null)&&(n>0))
+		{
+			id=line.substring(0,8);
+			name=line.substring(10,22);
+			validity=line.substring(24,36);
+			dob=line.substring(38,line.length()-2);
+			n--;
+		}
+		br.close();
+	}
+}
+class search
+{
+	String line,id,name,validity,dob;
+	void read(String text1,String text2,String text3,String text4)throws IOException{
+
+		FileReader fr=new FileReader("project.txt");
+		BufferedReader br=new BufferedReader(fr);
+		String p=" ";
+		while((line=br.readLine())!=null)
+		{
+			id=line.substring(0,8);
+			name=line.substring(10,22);
+			validity=line.substring(24,36);
+			dob=line.substring(38,line.length()-2);
+			for(int i=text1.length();i<8;i++)
+			{
+				text1=text1+p;
+			}
+			for(int j=text2.length();j<12;j++)
+			{
+				text2=text2+p;
+			}
+			for(int k=text3.length();k<12;k++)
+			{
+				text3=text3+p;
+			}
+			for(int l=text4.length();l<13;l++)
+			{
+				text4=text4+p;
+			}
+			if(text1.equals(id)||text2.equals(name)||text3.equals(validity)||text4.equals(dob))
+			{
+				break;
+			}
+		}
+		br.close();
+	}
+}
+class fileread
+{
+	String line,id,name,validity,dob;
+	void read()throws IOException{
+
+		FileReader fr=new FileReader("project.txt");
+		BufferedReader br=new BufferedReader(fr);
+		while((line=br.readLine())!=null)
+		{
+			id=line.substring(0,9);
+			name=line.substring(10,23);
+			validity=line.substring(24,37);
+			dob=line.substring(38,line.length()-1);
+			System.out.print(id);
+			System.out.print(name);
+			System.out.print(validity);
+			System.out.println(dob);
+		}
+		br.close();
+	}
+}
+class project{
+	public static void main(String [] args) throws IOException
+	{
+		fileread f=new fileread();
+		f.read();
+		SwingUtilities.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				new myframe();
+			}
+		});
+	}
+}

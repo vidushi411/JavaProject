@@ -1,0 +1,10 @@
+              Library    Management    System 
+ BOOK ID | BOOK NAME   | BOOK VALIDITY|   ISSUE DATE  |  
+ 
+970777   | Harry potter| LifeTime     | 5-10-1998     | 
+925555   | Discrete st | Expired      | 15-6-1999     | 
+576777   | Digital ele | 22-1-2018    | 28-11-1998    | 
+5656     | BIOLOGY     | 12-1-2018    | 5-10-1995     | 
+432432   | PHYSICS     | 15-12-2017   | 14-3-1889     | 
+957567   | MAths       | 31-10-2019   | 2-3-1990      |
+463524   | economic    | 25-12-2019   | 05-11-1997    | 
